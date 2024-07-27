@@ -4,7 +4,11 @@ import pandas as pd
 
 def analyze_sentiment(text):
     # Analyze the sentiment of the given text
-    sentiment = sia.polarity_scores(text)
+    try:
+        sentiment = sia.polarity_scores(text)
+    except Exception as e:
+        print(e)
+        return None    
     return sentiment
 
 
@@ -16,7 +20,7 @@ sia = SentimentIntensityAnalyzer()
 
 
 # Read the first 500 lines of a CSV file
-df = pd.read_csv('dataset.csv', nrows=500)
+df = pd.read_csv('dataset.csv', nrows=10000)
 
 # Apply the sentiment analysis to the 'text' column
 df['sentiment'] = df['review_text'].apply(analyze_sentiment)

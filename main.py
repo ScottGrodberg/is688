@@ -31,6 +31,22 @@ df = df.join(df['sentiment'].apply(pd.Series))
 # Drop the original 'sentiment' column if not needed
 df = df.drop(columns=['sentiment'])
 
+
+grouped = df.groupby(['app_id'])
+
+# Aggregating the grouped data
+aggregated = grouped.agg({
+    'pos': 'mean',
+    'neu': 'mean',
+    'neg': 'mean'
+})
+
+# Reset index to make app_id columns available for merging
+aggregated = aggregated.reset_index()
+
+# Merge the aggregated data back into the original DataFrame
+merged_df = pd.merge(df, aggregated, on=['app_id'])
+
 # Display the first few rows of the DataFrame with the sentiment scores
-print(df.head())
+print(merged_df.head())
 

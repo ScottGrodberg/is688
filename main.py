@@ -14,10 +14,6 @@ nltk.download('vader_lexicon')
 # Initialize the VADER sentiment analyzer
 sia = SentimentIntensityAnalyzer()
 
-# Example usage
-steam_review = "This game is amazing! The graphics are stunning and the gameplay is addictive."
-sentiment = analyze_sentiment(steam_review)
-
 
 # Read the first 500 lines of a CSV file
 df = pd.read_csv('dataset.csv', nrows=500)

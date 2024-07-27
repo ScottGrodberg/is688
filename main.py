@@ -1,6 +1,7 @@
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pandas as pd
+import random
 
 def analyze_sentiment(text):
     # Analyze the sentiment of the given text
@@ -12,6 +13,21 @@ def analyze_sentiment(text):
     return sentiment
 
 
+def read_csv_random_sample(file_path, sample_size):
+    # Get the number of lines in the file (excluding header)
+    with open(file_path, 'r') as file:
+        row_count = sum(1 for row in file) - 1  # Subtract 1 for the header
+
+    # Generate a sorted list of random line numbers to skip
+    skip_lines = sorted(random.sample(range(1, row_count + 1), row_count - sample_size))
+
+
+    # Read the sampled data
+    df_sample = pd.read_csv(file_path, skiprows=skip_lines)
+
+    return df_sample
+
+
 # Download the VADER lexicon
 # nltk.download('vader_lexicon')
 
@@ -20,7 +36,7 @@ sia = SentimentIntensityAnalyzer()
 
 
 # Read the first n lines of a CSV file
-df = pd.read_csv('dataset.csv', nrows=100000)
+df = read_csv_random_sample('dataset.csv', 10)
 
 # For each record, apply the sentiment analysis to the 'text' column
 df['sentiment'] = df['review_text'].apply(analyze_sentiment)

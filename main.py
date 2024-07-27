@@ -13,7 +13,7 @@ def analyze_sentiment(text):
 
 
 # Download the VADER lexicon
-nltk.download('vader_lexicon')
+# nltk.download('vader_lexicon')
 
 # Initialize the VADER sentiment analyzer
 sia = SentimentIntensityAnalyzer()

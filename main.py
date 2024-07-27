@@ -20,7 +20,7 @@ sia = SentimentIntensityAnalyzer()
 
 
 # Read the first n lines of a CSV file
-df = pd.read_csv('dataset.csv', nrows=10000)
+df = pd.read_csv('dataset.csv', nrows=100000)
 
 # For each record, apply the sentiment analysis to the 'text' column
 df['sentiment'] = df['review_text'].apply(analyze_sentiment)
@@ -48,4 +48,11 @@ merged_df = pd.merge(df, aggregated, on=['app_id'])
 
 # Display the first few rows of the DataFrame with the sentiment scores
 print(merged_df.head())
+
+deduplicated_df = df.drop_duplicates(subset=['app_name'])
+
+print(deduplicated_df.head())
+
+deduplicated_df.to_csv('dataset_w_sentiment_by_app_name.csv', index=False)
+
 

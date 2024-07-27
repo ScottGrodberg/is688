@@ -19,10 +19,10 @@ nltk.download('vader_lexicon')
 sia = SentimentIntensityAnalyzer()
 
 
-# Read the first 500 lines of a CSV file
+# Read the first n lines of a CSV file
 df = pd.read_csv('dataset.csv', nrows=10000)
 
-# Apply the sentiment analysis to the 'text' column
+# For each record, apply the sentiment analysis to the 'text' column
 df['sentiment'] = df['review_text'].apply(analyze_sentiment)
 
 # Expand the sentiment dictionary into separate columns
@@ -30,7 +30,6 @@ df = df.join(df['sentiment'].apply(pd.Series))
 
 # Drop the original 'sentiment' column if not needed
 df = df.drop(columns=['sentiment'])
-
 
 grouped = df.groupby(['app_id'])
 
